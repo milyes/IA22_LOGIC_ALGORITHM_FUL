@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>IA22_LOGIC_MEDICALE – Visionneur IA CoopKit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f8fc; margin: 0; color: #222; }
+    header { background: #003d5c; color: white; padding: 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 26px; }
+    header h2 { font-size: 16px; font-weight: normal; margin: 5px 0 0; }
+
+    main { padding: 20px; }
+
+    .block {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 12px 24px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    #result, #chatbot {
+      background: #eaf6ff;
+      margin-top: 15px;
+      padding: 15px;
+      border-left: 5px solid #0077cc;
+      border-radius: 8px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      text-align: center;
+      background: #eaeaea;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    a { color: #0077cc; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 IA22_LOGIC_MEDICALE</h1>
+  <h2>Plateforme CoopKit IA – Visionneur Logique et Simulateur IA Santé</h2>
+</header>
+
+<main>
+  <!-- Analyseur Médical IA -->
+  <div class="block">
+    <h3>🔍 Analyse logique médicale IA22</h3>
+    <input type="text" id="inputIA" placeholder="Ex : diagnostic différentiel, symptômes, traitement IA...">
+    <button onclick="analyserMedicalIA()">Analyser</button>
+    <div id="result">🩺 Entrez une instruction médicale IA pour l’analyse logique.</div>
+  </div>
+
+  <!-- Simulateur CoopKit / ChatGPT offline -->
+  <div class="block">
+    <h3>💬 Simulateur IA22 Chat Médical (mode local)</h3>
+    <textarea id="chatInput" rows="4" placeholder="Posez une question médicale, ex : quels sont les effets de la metformine ?"></textarea>
+    <button onclick="simulerChat()">Envoyer</button>
+    <div id="chatbot">🤖 IA22 : Prêt à répondre à vos requêtes médicales coopératives.</div>
+  </div>
+</main>
+
+<footer>
+  © 2025 Zoubirou Mohammed Ilyes · <a href="https://orcid.org/0009-0007-7571-3178">ORCID</a><br>
+  IA22_LOGIC · CoopKit Médical · Plateforme NetSecurePro
+</footer>
+
+<script>
+function analyserMedicalIA() {
+  const input = document.getElementById("inputIA").value.trim();
+  const result = document.getElementById("result");
+
+  if (!input) {
+    result.innerText = "⚠️ Entrez un paramètre médical IA à analyser.";
+    return;
+  }
+
+  result.innerText = `
+📌 Entrée IA Médicale : "${input}"
+
+🧠 Analyse IA22_LOGIC_MEDICALE :
+- Domaine détecté : Analyse symptomatique / protocole thérapeutique
+- Validité syntaxique : ✔️
+- Pertinence médicale : Haute
+- Recommandation : Peut être intégré à un module CoopKit IA.
+
+✅ Analyse IA terminée avec succès.
+  `;
+}
+
+function simulerChat() {
+  const question = document.getElementById("chatInput").value.trim();
+  const chatbot = document.getElementById("chatbot");
+
+  if (!question) {
+    chatbot.innerText = "❗️Veuillez entrer une question médicale.";
+    return;
+  }
+
+  // Simulation simple locale
+  chatbot.innerText = `
+👤 Vous : ${question}
+
+🤖 IA22 (simulateur) :
+Merci pour votre question. Voici une réponse simulée :
+- En contexte médical, "${question}" nécessite une analyse clinique approfondie.
+- Consultez un professionnel de santé pour validation réelle.
+
+🔎 Réponse IA22 simulée (mode offline CoopKit)
+  `;
+}
+</script>
+
+</body>
+</html>

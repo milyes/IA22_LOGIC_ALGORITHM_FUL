@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IA22_LOGIC Médicale Visionnaire – NetSecurePro IA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #f0f9ff);
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #004d66;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 { margin: 0; font-size: 1.8rem; }
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      width: 100%;
+    }
+    label {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    textarea {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: 1px solid #aaa;
+      resize: vertical;
+      min-height: 150px;
+      box-sizing: border-box;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    button {
+      margin-top: 1.5rem;
+      background: #0074a3;
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      font-size: 1.3rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+    button:hover:not(:disabled) {
+      background-color: #005f87;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+    #result {
+      margin-top: 2rem;
+      padding: 1.8rem;
+      background-color: #e6f4f1;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      min-height: 200px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      border: 1px solid #b0d4d1;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .disclaimer {
+      background: #ffebee;
+      color: #c62828;
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.05rem;
+      border: 1px solid #ef9a9a;
+    }
+    footer {
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.95rem;
+      color: #555;
+      background: #ddd;
+    }
+    a {
+      color: #004d66;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧠 IA22_LOGIC Médicale Visionnaire (Online)</h1>
+    <p>Écosystème Intégré – NetSecurePro IA</p>
+  </header>
+
+  <main>
+    <label for="symptoms">Décrivez vos symptômes ou questions médicales :</label>
+    <textarea id="symptoms" placeholder="Exemples : fièvre persistante, toux sèche, fatigue extrême, maux de tête intenses, douleurs abdominales, éruption cutanée..."></textarea>
+    
+    <button id="analyzeBtn">Lancer l’analyse IA</button>
+
+    <div class="disclaimer">
+      ⚠️ IMPORTANT : Cet outil est une démonstration éducative et expérimentale.<br>
+      Il ne remplace en aucun cas un diagnostic médical professionnel.<br>
+      En cas de symptômes, consultez toujours un médecin ou les urgences.
+    </div>
+
+    <div id="result">Résultat de l'analyse IA22_LOGIC apparaîtra ici...</div>
+  </main>
+
+  <footer>
+    Plateforme IA22_LOGIC – Développée par Zoubirou Mohammed Ilyes | ORCID: 
+    <a href="https://orcid.org/0009-0007-7571-3178" target="_blank" rel="noopener noreferrer">
+      0009-0007-7571-3178
+    </a>
+  </footer>
+
+  <script>
+    // Base de connaissances médicales courantes (indicative uniquement)
+    const baseConnaissances = [
+      { symptomes: ["fièvre", "toux", "fatigue", "maux de gorge", "perte goût", "perte odorat"], diagnostic: "Possible infection virale respiratoire (rhume, grippe ou COVID-19)", conseils: "Repos, hydratation abondante, paracétamol. Test COVID recommandé. Consultez si fièvre > 38.5°C pendant +3 jours ou essoufflement." },
+      { symptomes: ["maux de tête", "nausées", "vomissements", "sensibilité lumière", "sensibilité bruit"], diagnostic: "Possible migraine ou céphalée de tension", conseils: "Repos au calme et dans le noir, hydratation, antidouleurs (ibuprofène/paracétamol). Consultez si brutale ou inhabituelle." },
+      { symptomes: ["douleur abdominale", "diarrhée", "nausées", "vomissements"], diagnostic: "Possible gastro-entérite (virale ou alimentaire)", conseils: "Hydratation intensive (solutions de réhydratation orale), régime léger. Urgence si sang dans selles ou signes de déshydratation." },
+      { symptomes: ["douleur poitrine", "essoufflement", "palpitations", "transpiration"], diagnostic: "⚠️ Symptômes potentiellement graves (problème cardiaque, embolie...)", conseils: "APPELEZ IMMÉDIATEMENT LES URGENCES (15 ou 112 en France). Ne tardez pas !" },
+      { symptomes: ["éruption cutanée", "démangeaisons", "rougeurs", "gonflement"], diagnostic: "Possible réaction allergique ou dermatite", conseils: "Éviter le contact suspecté, antihistaminique. Urgence si gonflement visage/gorge ou difficulté à respirer." },
+      { symptomes: ["fatigue extrême", "perte poids", "soif intense", "urines fréquentes"], diagnostic: "Possible diabète non diagnostiqué", conseils: "Consultez rapidement un médecin pour un bilan glycémique." },
+      { symptomes: ["douleurs articulaires", "raideur matinale", "gonflement articulations"], diagnostic: "Possible maladie rhumatismale (arthrite...)", conseils: "Consultation médicale recommandée pour bilan." },
+      { symptomes: ["tristesse", "perte intérêt", "troubles sommeil", "anxiété"], diagnostic: "Signes possibles de dépression ou anxiété", conseils: "Parlez-en à un proche ou un professionnel de santé. Soutien psychologique important." }
+    ];
+
+    async function analyserSymptomes(texte) {
+      await new Promise(r => setTimeout(r, 1800)); // Simulation délai serveur
+
+      const mots = texte.toLowerCase()
+        .replace(/[,.;!?]/g, ' ')
+        .split(/\s+/)
+        .filter(m => m.length > 2);
+
+      let meilleurScore = 0;
+      let meilleurCas = null;
+
+      for (const cas of baseConnaissances) {
+        let score = 0;
+        for (const s of cas.symptomes) {
+          if (mots.includes(s)) score += 1;
+        }
+        if (score > meilleurScore) {
+          meilleurScore = score;
+          meilleurCas = cas;
+        }
+      }
+
+      const date = new Date().toLocaleString('fr-FR');
+
+      if (meilleurCas && meilleurScore >= 2) {
+        return `✅ Analyse IA22_LOGIC terminée – ${date}
+
+Symptômes détectés : ${mots.join(', ')}
+
+Diagnostic probable :
+${meilleurCas.diagnostic}
+
+Conseils immédiats :
+${meilleurCas.conseils}
+
+⚠️ Rappel : Cette analyse est indicative et basée sur une IA expérimentale.
+Consultez toujours un professionnel de santé pour un vrai diagnostic.`;
+      } else {
+        return `ℹ️ Analyse IA22_LOGIC terminée – ${date}
+
+Aucune correspondance forte trouvée dans la base de connaissances actuelle pour : "${texte}"
+
+Recommandation :
+- Décrivez vos symptômes plus précisément.
+- Consultez un médecin ou pharmacien, surtout si les symptômes persistent, s'aggravent ou sont inhabituels.
+
+Cet outil ne remplace pas un avis médical professionnel.`;
+      }
+    }
+
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const input = document.getElementById('symptoms').value.trim();
+      const resultDiv = document.getElementById('result');
+      const btn = document.getElementById('analyzeBtn');
+
+      if (!input) {
+        resultDiv.textContent = "⚠️ Veuillez décrire vos symptômes avant de lancer l'analyse.";
+        return;
+      }
+
+      btn.disabled = true;
+      resultDiv.textContent = "🔍 Analyse IA22_LOGIC en cours...\n(Traitement local avancé – aucune donnée envoyée)";
+
+      try {
+        const resultat = await analyserSymptomes(input);
+        resultDiv.textContent = resultat;
+      } catch (err) {
+        resultDiv.textContent = "❌ Erreur inattendue : " + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
